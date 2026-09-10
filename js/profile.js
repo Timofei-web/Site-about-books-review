@@ -1,0 +1,8 @@
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged, updateProfile, signOut } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+import { doc, getDoc, updateDoc, collection, query, where, orderBy, limit, onSnapshot } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+const form=document.querySelector("#profileForm"), root=document.querySelector("#reviews"); let user;
+onAuthStateChanged(auth,async u=>{if(!u)return location.href="auth.html";user=u;const data=await getDoc(doc(db,"users",u.uid));document.querySelector("#name").value=data.data()?.name||u.displayName||"";document.querySelector("#email").value=u.email||"";if(data.data()?.role==="admin")document.querySelector("#adminLink").hidden=false;onSnapshot(query(collection(db,"reviews"),where("userId","==",u.uid),orderBy("createdAt","desc"),limit(5)),snap=>{root.innerHTML=snap.docs.map(d=>{const r=d.data();return `<div class="order-card"><div><strong>Оценка: ${Number(r.rating)}/5</strong><small>${esc(r.text)}</small></div><a class="btn small" href="product.html?id=${encodeURIComponent(r.bookId)}">К книге</a></div>`}).join("")||"<p>Отзывов пока нет.</p>";});});
+form.addEventListener("submit",async e=>{e.preventDefault();const name=document.querySelector("#name").value.trim();await updateProfile(user,{displayName:name});await updateDoc(doc(db,"users",user.uid),{name});document.querySelector("#profileMessage").textContent="Профиль сохранён.";});
+document.querySelector("#logoutBtn")?.addEventListener("click",async()=>{await signOut(auth);location.href="index.html";});
+function esc(v){return String(v??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));}

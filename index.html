@@ -1,0 +1,10 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BookRate — отзывы о книгах</title><link rel="stylesheet" href="styles.css"></head>
+<body>
+<header class="header"><div class="container nav"><a class="logo" href="index.html">BookRate</a><a href="index.html">Книги</a><a href="reviews.html">Мои отзывы</a><a id="accountLink" href="profile.html" hidden>Профиль</a><a id="adminLink" href="admin.html" hidden>Админ</a><a id="authLink" href="auth.html">Войти</a><button id="logoutBtn" hidden>Выйти</button></div></header>
+<main>
+<section class="hero"><div class="container"><p class="muted">Учебный сайт отзывов о книгах</p><h1>Найди книгу и узнай, что о ней думают читатели</h1><p class="muted">Каталог книг, оценки, отзывы, поиск, фильтрация и обновления в реальном времени.</p>
+<div class="toolbar"><input class="input search" id="search" placeholder="Поиск по названию книги"><button class="btn" id="searchBtn">Найти</button><select class="select" id="category"><option value="all">Все жанры</option><option>Фэнтези</option><option>Фантастика</option><option>Детектив</option><option>Роман</option><option>Ужасы</option><option>Нон-фикшн</option><option>Классика</option></select><select class="select" id="sort"><option value="new">Сначала новые</option><option value="rating">По рейтингу</option><option value="yearDesc">По году</option></select></div></div></section>
+<section class="container"><div id="bookList" class="product-grid"></div><div class="center"><button class="btn" id="moreBtn">Показать ещё</button></div></section>
+</main><div id="toast" class="toast"></div><footer class="footer container">BookRate · Учебный проект</footer><script type="module" src="js/app.js"></script></body></html>
